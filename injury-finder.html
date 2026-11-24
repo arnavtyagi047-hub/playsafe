@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PlaySafe 3D Injury Finder - Identify your sports pain on an interactive 3D anatomical body model.">
+  <title>Injury Finder | PlaySafe Recovery Hub</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo-icon.svg">
+  <!-- Shared Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Injury Finder Specific Stylesheet -->
+  <link rel="stylesheet" href="css/finder.css">
+  <!-- Questionnaire Specific Stylesheet -->
+  <link rel="stylesheet" href="css/questions.css">
+</head>
+<body>
+
+  <!-- Sticky Site Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="PlaySafe Hub logo">
+        <img src="assets/logo.svg" alt="PlaySafe Hub logo" height="40" class="navbar-logo-img">
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="primary-nav" id="primary-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="injury-finder.html" class="nav-link">Injury Finder</a></li>
+          <li><a href="ask-physio.html" class="nav-link">Ask the Physio</a></li>
+          <li><a href="how-i-used-ai.html" class="nav-link">How I Used AI</a></li>
+          <li><a href="safety.html" class="nav-link">Safety &amp; Disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="finder-main" id="main-content">
+    <!-- VIEW 1: 3D Body Finder Section -->
+    <div id="body-view-section">
+      <div class="finder-layout">
+        <!-- Left Column (Desktop 60% / Tablet 60vh / Phone 65vh): 3D Canvas -->
+        <section class="canvas-column" aria-label="3D Anatomical Body Viewer">
+          <!-- Three.js Canvas Container -->
+          <div id="canvas-container">
+            <!-- Loading state: shown until 3D engine initialises -->
+            <div id="canvas-loader" aria-label="Loading 3D body model" role="status" style="
+              position: absolute; inset: 0;
+              display: flex; flex-direction: column;
+              align-items: center; justify-content: center;
+              background: #f8fafc; z-index: 10;
+              gap: 0.75rem; pointer-events: none;">
+              <div style="
+                width: 44px; height: 44px;
+                border: 4px solid #e2e8f0;
+                border-top-color: #2563eb;
+                border-radius: 50%;
+                animation: spin3d 0.8s linear infinite;">
+              </div>
+              <p style="font-size: 0.875rem; color: #64748b; margin: 0;">Loading 3D body…</p>
+            </div>
+          </div>
+          <style>@keyframes spin3d { to { transform: rotate(360deg); } }</style>
+
+          <!-- Floating Desktop Cursor Tooltip -->
+          <div id="hover-tooltip" role="tooltip" aria-hidden="true"></div>
+
+          <!-- 3D Viewer Floating Control Overlay -->
+          <div class="canvas-controls-overlay" aria-label="3D Viewer Controls">
+            <!-- Top Row: Gender Proportions & Auto-Rotate Toggle -->
+            <div class="controls-row">
+              <div class="controls-pill-group" role="group" aria-label="Body Proportions">
+                <button type="button" id="btn-gender-male" class="ctrl-btn active" aria-pressed="true">
+                  <span>Male</span>
+                </button>
+                <button type="button" id="btn-gender-female" class="ctrl-btn" aria-pressed="false">
+                  <span>Female</span>
+                </button>
+              </div>
+
+              <div class="controls-pill-group" role="group" aria-label="Rotation Toggle">
+                <button type="button" id="btn-toggle-rotate" class="ctrl-btn btn-rotate" aria-label="Pause 360 rotation">
+                  <span class="control-icon" aria-hidden="true">⏸</span>
+                  <span class="control-text">Pause</span>
+                </button>
+              </div>
+
+              <div class="controls-pill-group" role="group" aria-label="2D Fallback">
+                <button type="button" id="btn-open-2d" class="ctrl-btn" aria-label="Open 2D region list">
+                  <span aria-hidden="true">📋</span>
+                  <span>2D List</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Bottom Row: Camera View Presets -->
+            <div class="controls-row">
+              <div class="controls-pill-group" role="group" aria-label="Camera Presets">
+                <button type="button" class="ctrl-btn btn-view-preset active" data-view="front">Front</button>
+                <button type="button" class="ctrl-btn btn-view-preset" data-view="back">Back</button>
+                <button type="button" class="ctrl-btn btn-view-preset" data-view="left">Left</button>
+                <button type="button" class="ctrl-btn btn-view-preset" data-view="right">Right</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column (Desktop 40% Sticky / Tablet Below / Phone Bottom Sheet): Info Panel -->
+        <aside class="info-column" id="info-panel" aria-label="Injury Details and Triage Panel">
+          <!-- Mobile Bottom Sheet Drag/Close Bar -->
+          <div class="sheet-header-mobile">
+            <div class="sheet-pill-bar" aria-hidden="true"></div>
+            <button type="button" id="sheet-close-btn" class="sheet-close-btn" aria-label="Close injury sheet">✕</button>
+          </div>
+
+          <!-- Info Card Container: Dynamically Swapped between Hint & Active Region -->
+          <div class="info-card-container" id="info-card-content">
+            <!-- Initial Default Hint -->
+            <div class="info-card-hint">
+              <div class="hint-icon" aria-hidden="true">🎯</div>
+              <h2 class="hint-title">Identify Your Injury Spot</h2>
+              <p class="hint-text">
+                Tap or click anywhere on the 3D body to pinpoint where it hurts.
+              </p>
+              <div class="hint-tips">
+                <div class="hint-tip-row">
+                  <span class="tip-symbol" aria-hidden="true">🖱️</span>
+                  <span><strong>Rotate:</strong> Drag mouse or swipe with one finger</span>
+                </div>
+                <div class="hint-tip-row">
+                  <span class="tip-symbol" aria-hidden="true">🔍</span>
+                  <span><strong>Zoom:</strong> Mouse wheel or pinch with two fingers</span>
+                </div>
+                <div class="hint-tip-row">
+                  <span class="tip-symbol" aria-hidden="true">🔄</span>
+                  <span><strong>Views:</strong> Use Front, Back, Left, Right buttons</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Mobile Bottom Sheet Backdrop -->
+      <div id="sheet-backdrop" class="sheet-backdrop" aria-hidden="true"></div>
+
+      <!-- 2D Region List Accessible Fallback Modal -->
+      <div id="modal-2d-selector" class="modal-2d" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-2d-title">
+        <div class="modal-2d-dialog">
+          <header class="modal-2d-header">
+            <h2 id="modal-2d-title" class="modal-2d-title">Select Body Region (2D List)</h2>
+            <button type="button" id="btn-close-2d" class="sheet-close-btn" aria-label="Close 2D region list">✕</button>
+          </header>
+          <div class="modal-2d-body">
+            <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: 1rem;">
+              Click any region below to review bones, innervation, and prevalent athletic conditions.
+            </p>
+            <div id="list-2d-items" class="fallback-regions-grid">
+              <!-- Dynamically populated from BODY_PARTS_DATA -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: Step-by-Step Questionnaire Section (Launched by "Use this spot") -->
+    <section id="questionnaire-section" class="questionnaire-section" aria-label="Injury Assessment Questionnaire">
+      <div class="questionnaire-card">
+        <!-- Selected Part Summary Bar -->
+        <div class="part-summary-bar">
+          <div class="summary-text-group">
+            <span class="summary-tag">Selected:</span>
+            <span class="summary-part-name" id="summary-part-name">Selected Spot</span>
+          </div>
+          <button type="button" class="btn-change-part" id="btn-change-part" aria-label="Return to 3D body model">
+            <span aria-hidden="true">↺</span>
+            <span>Change body part</span>
+          </button>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="q-progress-wrapper">
+          <div class="q-progress-header">
+            <span>Assessment Progress</span>
+            <span class="q-progress-step-text" id="q-step-text">Step 1 of 3</span>
+          </div>
+          <div class="q-progress-track">
+            <div class="q-progress-bar" id="q-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- STEP 1: How did it happen? -->
+        <div class="q-step is-active" id="q-step-1">
+          <h2 class="step-heading">How did it happen?</h2>
+          <p class="step-desc">Select the primary injury mechanism that matches what occurred.</p>
+
+          <div class="mechanism-grid">
+            <button type="button" class="option-card mechanism-option" data-value="Twisted or landed badly">
+              <span class="option-icon" aria-hidden="true">🌀</span>
+              <span class="option-label">Twisted or landed badly</span>
+            </button>
+            <button type="button" class="option-card mechanism-option" data-value="Direct hit or collision">
+              <span class="option-icon" aria-hidden="true">💥</span>
+              <span class="option-label">Direct hit or collision</span>
+            </button>
+            <button type="button" class="option-card mechanism-option" data-value="Overuse or repetitive strain">
+              <span class="option-icon" aria-hidden="true">🔄</span>
+              <span class="option-label">Overuse or repetitive strain</span>
+            </button>
+            <button type="button" class="option-card mechanism-option" data-value="Sudden pull while sprinting, throwing or lifting">
+              <span class="option-icon" aria-hidden="true">⚡</span>
+              <span class="option-label">Sudden pull while sprinting, throwing or lifting</span>
+            </button>
+            <button type="button" class="option-card mechanism-option" data-value="Fell on it">
+              <span class="option-icon" aria-hidden="true">🤕</span>
+              <span class="option-label">Fell on it</span>
+            </button>
+            <button type="button" class="option-card mechanism-option" data-value="Other">
+              <span class="option-icon" aria-hidden="true">✍️</span>
+              <span class="option-label">Other</span>
+            </button>
+          </div>
+
+          <!-- Other text box -->
+          <div class="other-textbox-wrapper" id="other-textbox-wrapper">
+            <label for="other-description" class="form-label">Describe exactly what happened:</label>
+            <textarea id="other-description" class="other-textarea" maxlength="500" placeholder="Please describe the movement, speed, surface, or impact details (at least 10 characters)..."></textarea>
+            <div class="char-counter-row">
+              <span>Minimum 10 characters</span>
+              <span id="char-count">0 / 500 characters</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Symptoms & Pain Level -->
+        <div class="q-step" id="q-step-2">
+          <h2 class="step-heading">Symptoms &amp; Pain Level</h2>
+          <p class="step-desc">Rate your current pain intensity and indicate accompanying symptoms.</p>
+
+          <!-- Pain Slider -->
+          <div class="symptom-section-block">
+            <div class="pain-slider-card">
+              <div class="pain-display-row">
+                <div>
+                  <span class="meta-label">Pain Intensity (1 to 10)</span>
+                  <div class="pain-desc-label" id="pain-desc-label" style="text-align: left; margin-top: 2px;">Moderate Pain</div>
+                </div>
+                <div class="pain-number-badge" id="pain-number-badge">5</div>
+              </div>
+
+              <input type="range" id="pain-range" class="pain-range-input" min="1" max="10" value="5" step="1" aria-label="Pain intensity from 1 to 10">
+
+              <div class="pain-scale-legend">
+                <span>1 Mild</span>
+                <span>5 Moderate</span>
+                <span>10 Severe / Agonizing</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- When did it happen? -->
+          <div class="symptom-section-block">
+            <label for="when-happened-select" class="form-label">When did it happen? *</label>
+            <select id="when-happened-select" class="form-select">
+              <option value="" disabled selected>Select when the injury occurred...</option>
+              <option value="Just now">Just now</option>
+              <option value="Today">Today</option>
+              <option value="2-3 days ago">2-3 days ago</option>
+              <option value="About a week ago">About a week ago</option>
+              <option value="More than 2 weeks ago">More than 2 weeks ago</option>
+            </select>
+          </div>
+
+          <!-- Symptoms Checkbox Cards -->
+          <div class="symptom-section-block">
+            <label class="form-label">Check all symptoms that apply:</label>
+            <div class="symptoms-checkbox-grid">
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Swelling">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Swelling</span>
+              </div>
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Bruising">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Bruising</span>
+              </div>
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Clicking or popping sound">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Clicking or popping sound</span>
+              </div>
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Numbness or tingling">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Numbness or tingling</span>
+              </div>
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Can't put weight on it or can't use it">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Can't put weight on it or can't use it</span>
+              </div>
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Looks deformed or out of shape">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Looks deformed or out of shape</span>
+              </div>
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Difficulty moving it">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Difficulty moving it</span>
+              </div>
+              <div class="checkbox-card symptom-checkbox-card" data-symptom="Pain at night or at rest">
+                <span class="custom-checkbox" aria-hidden="true"></span>
+                <span class="checkbox-label">Pain at night or at rest</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Red-Flag Warning Box -->
+          <div id="step2-red-flag" class="red-flag-warning" role="alert">
+            <span class="warning-icon-large" aria-hidden="true">🚨</span>
+            <div class="warning-content">
+              <div class="warning-title">Clinical Red-Flag Warning</div>
+              <p class="warning-desc">
+                These signs can mean a serious injury. See a doctor as soon as possible.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Sport & Background -->
+        <div class="q-step" id="q-step-3">
+          <h2 class="step-heading">Sport &amp; Background</h2>
+          <p class="step-desc">Provide context regarding your athletic activity and background.</p>
+
+          <div class="form-field-group">
+            <label for="sport-select" class="form-label">Sport or Physical Activity *</label>
+            <select id="sport-select" class="form-select">
+              <option value="" disabled selected>Select your sport...</option>
+              <optgroup label="Team sports">
+                <option value="Cricket">Cricket</option>
+                <option value="Football">Football</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Volleyball">Volleyball</option>
+                <option value="Hockey">Hockey</option>
+                <option value="Kabaddi">Kabaddi</option>
+                <option value="Kho-Kho">Kho-Kho</option>
+                <option value="Handball">Handball</option>
+              </optgroup>
+              <optgroup label="Racket sports">
+                <option value="Badminton">Badminton</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Table Tennis">Table Tennis</option>
+              </optgroup>
+              <optgroup label="Individual and fitness">
+                <option value="Athletics or Running">Athletics or Running</option>
+                <option value="Gym or Weightlifting">Gym or Weightlifting</option>
+                <option value="Swimming">Swimming</option>
+                <option value="Boxing">Boxing</option>
+                <option value="Wrestling">Wrestling</option>
+                <option value="Cycling">Cycling</option>
+                <option value="Skating">Skating</option>
+                <option value="Yoga">Yoga</option>
+              </optgroup>
+              <optgroup label="Other">
+                <option value="Other">Other</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Text box when Other is chosen -->
+          <div class="form-field-group" id="sport-other-wrapper" style="display: none;">
+            <label for="sport-other-input" class="form-label">Which sport? *</label>
+            <input type="text" id="sport-other-input" class="form-select" maxlength="40" placeholder="Which sport? (max 40 characters)" style="background-image: none; padding-right: 1rem;">
+          </div>
+
+          <div class="form-field-group">
+            <label class="form-label">Have you injured this spot before? *</label>
+            <div class="yes-no-btn-group" role="group" aria-label="Prior Injury Status">
+              <button type="button" class="yes-no-btn" id="injured-before-yes">Yes</button>
+              <button type="button" class="yes-no-btn" id="injured-before-no">No</button>
+            </div>
+          </div>
+
+          <div class="form-field-group">
+            <label for="age-group-select" class="form-label">Age Group *</label>
+            <select id="age-group-select" class="form-select">
+              <option value="" disabled selected>Select age group...</option>
+              <option value="Under 12">Under 12</option>
+              <option value="12-17">12-17</option>
+              <option value="18-30">18-30</option>
+              <option value="31-45">31-45</option>
+              <option value="46+">46+</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- STEP 4: Review Screen -->
+        <div class="q-step" id="q-step-4">
+          <h2 class="step-heading">Review Your Assessment</h2>
+          <p class="step-desc">Check your answers before generating your customized recovery plan.</p>
+
+          <div id="review-content-list" class="review-cards-list">
+            <!-- Dynamically populated from injuryData -->
+          </div>
+
+          <!-- Plan Preview Confirmation -->
+          <div id="plan-preview-modal" class="plan-preview-modal" role="status">
+            <div class="plan-preview-title">
+              <span aria-hidden="true">✓</span>
+              <span>Assessment Completed &amp; Saved</span>
+            </div>
+            <p class="plan-preview-text">
+              <strong>Recovery plan coming in the next step.</strong> Your full injury profile has been stored safely in <code>sessionStorage</code> and is ready for clinical protocol generation.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem;">
+            <button type="button" id="btn-get-plan" class="btn btn-secondary btn-block" style="flex: 2; min-height: 52px; font-size: var(--font-size-md);">
+              <span>Get my recovery plan</span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <button type="button" id="btn-review-back" class="btn btn-outline btn-block" style="flex: 1;">
+              <span>← Back</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Shared Step Navigation (Steps 1, 2, 3) -->
+        <div class="q-action-bar" id="q-action-bar">
+          <button type="button" class="btn btn-outline" id="q-btn-back">
+            <span>← Back</span>
+          </button>
+          <button type="button" class="btn btn-primary btn-next" id="q-btn-next" disabled>
+            <span>Next Step →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" aria-label="PlaySafe Hub logo">
+            <img src="assets/logo.svg" alt="PlaySafe Hub logo" height="40" class="navbar-logo-img">
+          </a>
+          <p class="footer-tagline">
+            Bringing accessible, first-level sports injury guidance and rehabilitation roadmaps to athletes across India and beyond.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-links-title">Quick Links</h4>
+          <nav class="footer-links" aria-label="Footer Navigation">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="injury-finder.html" class="footer-link">Injury Finder</a>
+            <a href="ask-physio.html" class="footer-link">Ask the Physio</a>
+            <a href="how-i-used-ai.html" class="footer-link">How I Used AI</a>
+            <a href="safety.html" class="footer-link">Safety &amp; Disclaimer</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Mandatory Footer Disclaimer -->
+      <div class="footer-disclaimer-box">
+        <p class="footer-disclaimer-text">
+          <span aria-hidden="true">⚠️</span>
+          <span><strong>General guidance only, not a doctor's diagnosis.</strong> PlaySafe is an educational triage tool. AI and automated guidance can make errors. Always seek evaluation by a qualified medical professional for acute injuries.</span>
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 PlaySafe Recovery Hub. All rights reserved.</p>
+        <p>Accessible sports healthcare for every player.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- External CDN Libraries (Vanilla Three.js & OrbitControls) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+  <!-- Application Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/bodyParts.js"></script>
+  <script src="js/body3d.js"></script>
+  <script src="js/injury-finder.js"></script>
+  <script src="js/sportTips.js"></script>
+  <script src="js/questions.js"></script>
+</body>
+</html>

@@ -1,0 +1,705 @@
+/* ==========================================================================
+   PlaySafe Recovery Hub - Questionnaire Stylesheet (questions.css)
+   Mobile-First, Responsive Layout (Phone, Tablet, Desktop)
+   Theme: Consistent Blue & Green Palette, Big Touch-friendly Controls
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Questionnaire View Wrapper
+   -------------------------------------------------------------------------- */
+.questionnaire-section {
+  display: none; /* Shown dynamically via JavaScript when "Use this spot" is pressed */
+  width: 100%;
+  padding: clamp(1rem, 3vw, 2.5rem) 1rem;
+  background-color: var(--color-bg);
+  min-height: calc(100vh - var(--header-height));
+}
+
+.questionnaire-section.is-active {
+  display: block;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Centered Card (Max-width 800px on desktop) */
+.questionnaire-card {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Selected Body Part Summary Bar
+   -------------------------------------------------------------------------- */
+.part-summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, var(--color-primary-soft), var(--color-accent-soft));
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+}
+
+.summary-text-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+}
+
+.summary-tag {
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.05em;
+}
+
+.summary-part-name {
+  font-weight: 800;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+}
+
+.btn-change-part {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.4rem 0.85rem;
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  min-height: 38px;
+  transition: all var(--transition-fast);
+}
+
+.btn-change-part:hover {
+  background-color: var(--color-primary-soft);
+  border-color: var(--color-primary-border);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Progress Indicator
+   -------------------------------------------------------------------------- */
+.q-progress-wrapper {
+  margin-bottom: 2rem;
+}
+
+.q-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.q-progress-step-text {
+  color: var(--color-primary);
+}
+
+.q-progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.q-progress-bar {
+  height: 100%;
+  width: 33.33%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: var(--radius-full);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Step Content & Transitions
+   -------------------------------------------------------------------------- */
+.q-step {
+  display: none;
+}
+
+.q-step.is-active {
+  display: block;
+  animation: slideStepIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideStepIn {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.step-heading {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+
+.step-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   Step 1: Mechanism Option Cards
+   -------------------------------------------------------------------------- */
+.mechanism-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 601px) {
+  .mechanism-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+.option-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem;
+  min-height: 64px;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  user-select: none;
+}
+
+.option-card:hover {
+  border-color: var(--color-primary-light);
+  background-color: var(--color-primary-soft);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.option-card.is-selected {
+  border-color: var(--color-primary);
+  background-color: #eff6ff;
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.option-icon {
+  font-size: 1.65rem;
+  flex-shrink: 0;
+}
+
+.option-label {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+/* Other Description Textbox */
+.other-textbox-wrapper {
+  margin-top: 1rem;
+  display: none;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.other-textbox-wrapper.is-visible {
+  display: block;
+}
+
+.other-textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 0.85rem 1rem;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  line-height: 1.5;
+  transition: border-color var(--transition-fast);
+}
+
+.other-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+}
+
+.char-counter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.4rem;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+/* --------------------------------------------------------------------------
+   Step 2: Symptoms & Pain Slider
+   -------------------------------------------------------------------------- */
+.symptom-section-block {
+  margin-bottom: 2rem;
+}
+
+.sub-section-title {
+  font-size: var(--font-size-md);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 0.85rem;
+}
+
+/* Pain Level Slider */
+.pain-slider-card {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pain-display-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pain-number-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-full);
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #ffffff;
+  background-color: var(--color-accent);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.pain-desc-label {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: right;
+}
+
+/* Custom styled Range Input */
+.pain-range-input {
+  width: 100%;
+  height: 12px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, #10b981 0%, #f59e0b 50%, #dc2626 100%);
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+
+.pain-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.pain-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.pain-scale-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+/* Dropdown Selects (Touch-friendly >= 44px) */
+.form-select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.65rem 1rem;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23475569' viewBox='0 0 16 16'%3E%3Cpath d='M8 11.5l-5-5h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 14px;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+}
+
+/* Symptoms Checkbox Cards Grid */
+.symptoms-checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 601px) {
+  .symptoms-checkbox-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.checkbox-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 52px;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.checkbox-card:hover {
+  border-color: var(--color-primary-light);
+  background-color: var(--color-primary-soft);
+}
+
+.checkbox-card.is-checked {
+  border-color: var(--color-primary);
+  background-color: #eff6ff;
+}
+
+.custom-checkbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--color-border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+  background-color: #ffffff;
+}
+
+.checkbox-card.is-checked .custom-checkbox {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.checkbox-card.is-checked .custom-checkbox::after {
+  content: "✓";
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.checkbox-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+/* Red Flag Warning Box */
+.red-flag-warning {
+  display: none;
+  margin-top: 1.5rem;
+  background-color: var(--color-danger-soft);
+  border: 2px solid var(--color-danger);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  animation: shakeAlert 0.4s ease-in-out;
+}
+
+@keyframes shakeAlert {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.red-flag-warning.is-visible {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.warning-icon-large {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.warning-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.warning-title {
+  font-weight: 800;
+  color: var(--color-danger);
+  font-size: var(--font-size-base);
+}
+
+.warning-desc {
+  font-size: var(--font-size-sm);
+  color: #7f1d1d;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Step 3: Sport & Background
+   -------------------------------------------------------------------------- */
+.form-field-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+/* Yes / No Pill Button Group */
+.yes-no-btn-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.yes-no-btn {
+  flex: 1;
+  min-height: 48px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.yes-no-btn:hover {
+  border-color: var(--color-primary-light);
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.yes-no-btn.is-active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(30, 64, 175, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   Final Step: Review Screen
+   -------------------------------------------------------------------------- */
+.review-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.review-section-card {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.review-info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.review-category-title {
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.review-main-value {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.review-sub-value {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.btn-edit-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.85rem;
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  min-height: 38px;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.btn-edit-step:hover {
+  background-color: var(--color-primary-soft);
+  border-color: var(--color-primary-border);
+}
+
+/* Plan Modal / Success Box */
+.plan-preview-modal {
+  display: none;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: var(--color-accent-soft);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.plan-preview-modal.is-visible {
+  display: block;
+}
+
+.plan-preview-title {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plan-preview-text {
+  font-size: var(--font-size-sm);
+  color: #065f46;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation Action Bar (Back / Next)
+   -------------------------------------------------------------------------- */
+.q-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.q-action-bar .btn {
+  min-height: 48px;
+}
+
+.btn-next[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* Mobile responsive touch tweaks */
+@media (max-width: 600px) {
+  .questionnaire-card {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 1.25rem 1rem;
+    box-shadow: none;
+  }
+
+  .q-action-bar {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .q-action-bar .btn {
+    width: 100%;
+  }
+}

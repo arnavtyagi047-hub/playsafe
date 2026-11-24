@@ -1,0 +1,399 @@
+/* ==========================================================================
+   PlaySafe Recovery Hub - Ask the Physio Page Styles
+   css/physio.css
+   Responsive: Mobile (360px+), Tablet, Desktop
+   Theme: Consistent with style.css tokens
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Yellow Medical / AI Warning Callout Box
+   -------------------------------------------------------------------------- */
+.physio-warning-box {
+  background-color: var(--color-warning-soft);
+  border: 2px solid var(--color-warning-border);
+  border-left: 6px solid var(--color-warning);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.physio-warning-box:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.physio-warning-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.physio-warning-icon {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.physio-warning-text {
+  font-size: var(--font-size-base);
+  color: #78350f;
+  font-weight: 600;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Quick-Questions Cards Section
+   -------------------------------------------------------------------------- */
+.quick-questions-section {
+  margin-bottom: 2.75rem;
+}
+
+.section-intro-compact {
+  margin-bottom: 1.5rem;
+}
+
+.section-intro-compact .section-subtitle {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.section-intro-compact .section-lead {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* Responsive grid: 1 column on phone, 2 on tablet, 4 on desktop */
+.quick-questions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 601px) {
+  .quick-questions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .quick-questions-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.quick-question-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+}
+
+.quick-question-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary-border);
+}
+
+.quick-question-body {
+  margin-bottom: 1.5rem;
+}
+
+.question-tag {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--color-primary-border);
+}
+
+.quick-question-text {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.quick-question-footer {
+  margin-top: auto;
+}
+
+/* Copy Button with interactive states */
+.copy-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.6rem 1.25rem;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary-border);
+  transition: all var(--transition-fast);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.copy-btn:hover {
+  background-color: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.copy-btn:active {
+  transform: translateY(1px);
+}
+
+/* State when clicked and text is copied */
+.copy-btn.copied {
+  background-color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
+  transform: scale(1.02);
+}
+
+.copy-icon {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.copy-btn.copied .copy-icon {
+  transform: rotate(360deg);
+}
+
+/* --------------------------------------------------------------------------
+   Chatbot Container Wrapper & Launcher Card
+   -------------------------------------------------------------------------- */
+.chatbot-container-wrapper {
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.chatbot-helper-card {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border: 2px solid var(--color-primary-border);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.chatbot-helper-card::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.helper-bubble-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  background-color: #ffffff;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--color-primary-border);
+  flex-shrink: 0;
+}
+
+.helper-content {
+  flex: 1;
+}
+
+.helper-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.35rem;
+}
+
+.helper-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 0.85rem;
+}
+
+.helper-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.status-indicator-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--color-accent);
+  background-color: #ffffff;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-accent-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px rgba(5, 150, 105, 0.6);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.5;
+  }
+}
+
+.helper-device-note {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Fallback Notice (Displayed when chatbot fails to load)
+   -------------------------------------------------------------------------- */
+.chatbot-fallback-banner {
+  background-color: var(--color-danger-soft);
+  border: 2px solid var(--color-danger-border);
+  border-left: 6px solid var(--color-danger);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+  animation: fallbackFadeIn 0.35s ease;
+}
+
+.fallback-icon {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.fallback-body {
+  flex: 1;
+}
+
+.fallback-heading {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-danger);
+  margin-bottom: 0.25rem;
+}
+
+.fallback-text {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+}
+
+.fallback-subtext {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.fallback-subtext a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.fallback-subtext a:hover {
+  color: var(--color-primary-hover);
+}
+
+@keyframes fallbackFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Adaptations (phones under 600px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .chatbot-helper-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 1.25rem;
+    gap: 1rem;
+  }
+
+  .helper-bubble-icon {
+    width: 54px;
+    height: 54px;
+    font-size: 2rem;
+  }
+
+  .copy-btn {
+    min-height: 48px; /* High touch target on phones */
+  }
+
+  .physio-warning-box {
+    padding: 1rem 1.25rem;
+  }
+}

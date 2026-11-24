@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ask the Physio - Ask general questions about sports injuries, recovery and prevention with our AI physio assistant.">
+  <title>Ask the Physio | PlaySafe Recovery Hub</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo-icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/physio.css">
+</head>
+<body>
+
+  <!-- Sticky Site Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="PlaySafe Hub logo">
+        <img src="assets/logo.svg" alt="PlaySafe Hub logo" height="40" class="navbar-logo-img">
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="primary-nav" id="primary-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="injury-finder.html" class="nav-link">Injury Finder</a></li>
+          <li><a href="ask-physio.html" class="nav-link active">Ask the Physio</a></li>
+          <li><a href="how-i-used-ai.html" class="nav-link">How I Used AI</a></li>
+          <li><a href="safety.html" class="nav-link">Safety &amp; Disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container">
+        <span class="pill-badge green">Sports Physio Q&amp;A</span>
+        <h1 class="page-title">Ask the Physio</h1>
+        <p class="page-intro">
+          Ask general questions about sports injuries, recovery and prevention.
+        </p>
+      </div>
+    </div>
+
+    <section class="section" style="padding-top: 1.5rem;">
+      <div class="container">
+        <!-- Yellow Warning Box -->
+        <div class="physio-warning-box" role="alert">
+          <div class="physio-warning-inner">
+            <span class="physio-warning-icon" aria-hidden="true">⚠️</span>
+            <p class="physio-warning-text">
+              AI answers can be wrong. This is general guidance, not a doctor's diagnosis. For severe pain, numbness, swelling or deformity, see a doctor.
+            </p>
+          </div>
+        </div>
+
+        <!-- 4 Quick-Question Cards -->
+        <div class="quick-questions-section">
+          <div class="section-intro-compact">
+            <span class="pill-badge blue">Quick Prompts</span>
+            <h2 class="section-subtitle">Common Questions</h2>
+            <p class="section-lead">
+              Tap <strong>Copy</strong> on any question below to copy it to your clipboard, then paste it into the AI Physio chat bubble at the bottom right.
+            </p>
+          </div>
+
+          <div class="cards-grid quick-questions-grid">
+            <!-- Question Card 1 -->
+            <div class="card quick-question-card">
+              <div class="quick-question-body">
+                <span class="question-tag">Acute Care</span>
+                <h3 class="quick-question-text">How do I reduce swelling?</h3>
+              </div>
+              <div class="quick-question-footer">
+                <button type="button" class="btn copy-btn" data-question="How do I reduce swelling?" aria-label="Copy 'How do I reduce swelling?' to clipboard">
+                  <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span class="copy-btn-text">Copy</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Question Card 2 -->
+            <div class="card quick-question-card">
+              <div class="quick-question-body">
+                <span class="question-tag">Return to Sport</span>
+                <h3 class="quick-question-text">When can I play again?</h3>
+              </div>
+              <div class="quick-question-footer">
+                <button type="button" class="btn copy-btn" data-question="When can I play again?" aria-label="Copy 'When can I play again?' to clipboard">
+                  <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span class="copy-btn-text">Copy</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Question Card 3 -->
+            <div class="card quick-question-card">
+              <div class="quick-question-body">
+                <span class="question-tag">Taping Guide</span>
+                <h3 class="quick-question-text">How do I tape my ankle?</h3>
+              </div>
+              <div class="quick-question-footer">
+                <button type="button" class="btn copy-btn" data-question="How do I tape my ankle?" aria-label="Copy 'How do I tape my ankle?' to clipboard">
+                  <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span class="copy-btn-text">Copy</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Question Card 4 -->
+            <div class="card quick-question-card">
+              <div class="quick-question-body">
+                <span class="question-tag">Therapy Choice</span>
+                <h3 class="quick-question-text">Should I use ice or heat?</h3>
+              </div>
+              <div class="quick-question-footer">
+                <button type="button" class="btn copy-btn" data-question="Should I use ice or heat?" aria-label="Copy 'Should I use ice or heat?' to clipboard">
+                  <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span class="copy-btn-text">Copy</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chatbot Container with Botpress Webchat Snippet -->
+        <div id="chatbot-container" class="chatbot-container-wrapper">
+<link rel="stylesheet" href="https://vdk-viber-runtime-prod.bot.botpress.host/edge/webchat.css" />
+<script src="https://vdk-viber-runtime-prod.bot.botpress.host/edge/webchat.js"></script>
+<script>
+  fetch("https://vdk-viber-runtime-prod.bot.botpress.host/edge/bots/9669f4a9-3abb-4564-9d2a-1ac6db68eb20/config")
+    .then((res) => res.json())
+    .then(({ webchat }) =>
+      VdkEdgeWebchat.mount({ ...webchat, mode: "bubble", baseUrl: "https://vdk-viber-runtime-prod.bot.botpress.host", botId: "9669f4a9-3abb-4564-9d2a-1ac6db68eb20" })
+    )
+    .catch(function () {
+      /* Network or config failure — show the fallback banner immediately */
+      var fb = document.getElementById('chatbot-fallback');
+      if (fb) { fb.style.display = 'flex'; fb.setAttribute('aria-live', 'assertive'); }
+    });
+</script>
+
+          <!-- Interactive Chat Launcher Helper -->
+          <div class="chatbot-helper-card">
+            <div class="helper-bubble-icon" aria-hidden="true">💬</div>
+            <div class="helper-content">
+              <h3 class="helper-title">AI Physio Assistant Ready</h3>
+              <p class="helper-text">
+                Look for the interactive chat bubble in the <strong>bottom-right corner</strong> of your screen. Click it anytime to open the chat window, ask injury questions, or paste copied queries.
+              </p>
+              <div class="helper-badge-row">
+                <span class="status-indicator-live">
+                  <span class="live-dot" aria-hidden="true"></span> Live Botpress Bubble
+                </span>
+                <span class="helper-device-note">Works on Mobile Phones, Tablets &amp; Desktop</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fallback message if chatbot fails to load -->
+          <div id="chatbot-fallback" class="chatbot-fallback-banner" style="display: none;" role="status">
+            <div class="fallback-icon" aria-hidden="true">⚠️</div>
+            <div class="fallback-body">
+              <h4 class="fallback-heading">Service Notice</h4>
+              <p class="fallback-text">The chatbot is not available right now. Please try again later.</p>
+              <p class="fallback-subtext">
+                If you need injury guidance right away, please try our interactive <a href="injury-finder.html">Injury Finder</a> or consult a qualified doctor or physiotherapist.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Safety reminder banner -->
+        <aside class="safety-banner" style="margin-top: 2.5rem;">
+          <div class="safety-banner-content">
+            <div class="safety-banner-header">
+              <span aria-hidden="true">🛡️</span>
+              <span>Important Medical Disclaimer</span>
+            </div>
+            <p class="safety-banner-text">
+              Responses from AI assistants can be inaccurate or incomplete. Never use automated chat responses as a substitute for in-person evaluation by a licensed healthcare provider, especially for acute swelling, numbness, or inability to bear weight.
+            </p>
+          </div>
+          <div class="safety-banner-action">
+            <a href="safety.html" class="btn btn-outline" style="background:#ffffff; color: var(--color-danger); border-color: var(--color-danger-border);">
+              Safety Policy
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" aria-label="PlaySafe Hub logo">
+            <img src="assets/logo.svg" alt="PlaySafe Hub logo" height="40" class="navbar-logo-img">
+          </a>
+          <p class="footer-tagline">
+            Bringing accessible, first-level sports injury guidance and rehabilitation roadmaps to athletes across India and beyond.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-links-title">Quick Links</h4>
+          <nav class="footer-links" aria-label="Footer Navigation">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="injury-finder.html" class="footer-link">Injury Finder</a>
+            <a href="ask-physio.html" class="footer-link">Ask the Physio</a>
+            <a href="how-i-used-ai.html" class="footer-link">How I Used AI</a>
+            <a href="safety.html" class="footer-link">Safety &amp; Disclaimer</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Mandatory Footer Disclaimer -->
+      <div class="footer-disclaimer-box">
+        <p class="footer-disclaimer-text">
+          <span aria-hidden="true">⚠️</span>
+          <span><strong>General guidance only, not a doctor's diagnosis.</strong> PlaySafe is an educational triage tool. AI and automated guidance can make errors. Always seek evaluation by a qualified medical professional for acute injuries.</span>
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 PlaySafe Recovery Hub. All rights reserved.</p>
+        <p>Accessible sports healthcare for every player.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/physio.js"></script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PlaySafe Recovery Plan - Evidence-based first-aid, sport-specific tips, phased exercises, and return-to-play checklist.">
+  <title>Your Recovery Plan | PlaySafe Recovery Hub</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo-icon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/results.css">
+</head>
+<body>
+
+  <!-- Sticky Site Navigation -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="PlaySafe Hub logo">
+        <img src="assets/logo.svg" alt="PlaySafe Hub logo" height="40" class="navbar-logo-img">
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-nav">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="primary-nav" id="primary-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="injury-finder.html" class="nav-link active">Injury Finder</a></li>
+          <li><a href="ask-physio.html" class="nav-link">Ask the Physio</a></li>
+          <li><a href="how-i-used-ai.html" class="nav-link">How I Used AI</a></li>
+          <li><a href="safety.html" class="nav-link">Safety &amp; Disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="results-page-main" id="main-content">
+    <div class="results-layout">
+      <!-- Desktop Sticky Side Navigation Menu -->
+      <aside class="results-sidebar" aria-label="Plan Sections Navigation">
+        <div class="sidebar-heading">Recovery Sections</div>
+        <ul class="sidebar-nav-list" id="sidebar-nav-list">
+          <li><a href="#sec-summary" class="sidebar-nav-link is-active"><span class="sidebar-nav-icon">📋</span><span>Summary</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-cause" class="sidebar-nav-link"><span class="sidebar-nav-icon">🔍</span><span>What This May Be</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-firstaid" class="sidebar-nav-link"><span class="sidebar-nav-icon">🧊</span><span>First Aid Now</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-exercises" class="sidebar-nav-link"><span class="sidebar-nav-icon">🏋️‍♂️</span><span>Exercises</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-taping" class="sidebar-nav-link"><span class="sidebar-nav-icon">🩹</span><span>Taping Guide</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-medicine" class="sidebar-nav-link"><span class="sidebar-nav-icon">💊</span><span>Medicine Info</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-returntoplay" class="sidebar-nav-link"><span class="sidebar-nav-icon">🏁</span><span>Return to Play</span></a></li>
+          <li class="sidebar-guide-item" id="sidebar-sport-link"><a href="#sec-sporttips" class="sidebar-nav-link"><span class="sidebar-nav-icon">🏆</span><span>Sport Tips</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-mistakes" class="sidebar-nav-link"><span class="sidebar-nav-icon">⚠️</span><span>Mistakes to Avoid</span></a></li>
+          <li class="sidebar-guide-item"><a href="#sec-warnings" class="sidebar-nav-link"><span class="sidebar-nav-icon">🚨</span><span>See a Doctor If</span></a></li>
+        </ul>
+
+        <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--color-border);">
+          <button type="button" class="btn btn-outline btn-block" id="btn-sidebar-print" style="min-height: 40px; font-size: var(--font-size-xs);">
+            <span>🖨️ Save as PDF</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Results Content Column -->
+      <div class="results-content-col">
+        <!-- TOP RED-FLAG OR MILD STATUS BANNER (Most Important) -->
+        <div id="triage-status-banner" class="triage-banner banner-mild" role="region" aria-live="polite">
+          <div class="triage-banner-header">
+            <span class="triage-banner-icon" id="triage-banner-icon" aria-hidden="true">✓</span>
+            <div>
+              <h1 class="triage-banner-title" id="triage-banner-title">
+                Your answers don't show urgent warning signs, but see a doctor if things get worse.
+              </h1>
+              <p class="triage-banner-sub" id="triage-banner-sub">
+                Follow the conservative recovery pathway below and allow tissues adequate time to remodel.
+              </p>
+            </div>
+          </div>
+          <!-- Urgent Warning Signs list shown below banner if severe red flags triggered -->
+          <div id="banner-severe-warning-wrapper" style="display: none; margin-top: 0.5rem;">
+            <div class="banner-caution-note" style="margin-bottom: 0.5rem;">
+              Red-Flag Warning Signs Identified:
+            </div>
+            <ul id="banner-warning-items" class="banner-warning-list">
+              <!-- Populated dynamically -->
+            </ul>
+            <p class="banner-caution-note" style="margin-top: 0.75rem;">
+              ⚠️ Only use this as general information until a doctor has checked you.
+            </p>
+          </div>
+        </div>
+
+        <!-- UNMAPPED REGION CARD (Friendly message for head, neck, abdomen) -->
+        <div id="unmapped-region-card" class="unmapped-notice-card" style="display: none;">
+          <span style="font-size: 2.5rem;" aria-hidden="true">🩺</span>
+          <h2 style="font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text);">
+            We don't have a detailed guide for this area yet. Please see a doctor or physio.
+          </h2>
+          <p style="font-size: var(--font-size-base); color: var(--color-text-muted); max-width: 600px; line-height: 1.6;">
+            Injuries to the head, neck, or abdomen require direct physical examination, neurological testing, or imaging by a medical doctor. Do not attempt self-rehabilitation for acute head or cervical spinal trauma.
+          </p>
+          <div class="banner-caution-note" style="max-width: 600px; text-align: left; margin-top: 0.5rem;">
+            Emergency signs: Seek immediate emergency room care if you experience loss of consciousness, neck stiffness with numbness in arms, persistent vomiting, or acute abdominal rigidity.
+          </div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem;">
+            <a href="ask-physio.html" class="btn btn-primary">Ask the Physio</a>
+            <a href="safety.html" class="btn btn-outline">Read Safety Policy</a>
+          </div>
+        </div>
+
+        <!-- 1. YOUR SUMMARY SECTION -->
+        <section class="section-card" id="sec-summary" aria-labelledby="title-summary">
+          <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+            <div class="card-title-group">
+              <span class="card-icon" aria-hidden="true">📋</span>
+              <h2 id="title-summary" class="card-title">1. Your Assessment Summary</h2>
+            </div>
+            <span class="accordion-caret" aria-hidden="true">▼</span>
+          </header>
+          <div class="card-accordion-body">
+            <div class="summary-grid-box">
+              <div class="summary-data-item">
+                <span class="summary-data-label">Body Region</span>
+                <span class="summary-data-val" id="res-body-part">Loading...</span>
+              </div>
+              <div class="summary-data-item">
+                <span class="summary-data-label">Sport / Activity</span>
+                <span class="summary-data-val" id="res-sport">Loading...</span>
+              </div>
+              <div class="summary-data-item">
+                <span class="summary-data-label">How It Happened</span>
+                <span class="summary-data-val" id="res-how-happened">Loading...</span>
+              </div>
+              <div class="summary-data-item">
+                <span class="summary-data-label">Pain Level &amp; Onset</span>
+                <span class="summary-data-val" id="res-pain-timing">Loading...</span>
+              </div>
+            </div>
+
+            <!-- "Other" description quote box if user entered one -->
+            <div id="res-other-quote-wrapper" style="display: none;">
+              <span class="summary-data-label">What You Described:</span>
+              <div class="quote-box" id="res-other-quote">"..."</div>
+            </div>
+
+            <!-- Extra Personalisation Callouts -->
+            <div id="personalization-container">
+              <!-- Populated dynamically (Youth athlete & Repeat injury advice) -->
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTAINER FOR DETAILED CLINICAL SECTIONS (Hidden if unmapped) -->
+        <div id="clinical-sections-wrapper">
+          <!-- 2. WHAT THIS MAY BE -->
+          <section class="section-card" id="sec-cause" aria-labelledby="title-cause">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">🔍</span>
+                <h2 id="title-cause" class="card-title">2. What This May Be</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <h3 id="res-injury-title" style="font-size: var(--font-size-md); font-weight: 800; color: var(--color-primary); margin-bottom: 0.5rem;">
+                Loading title...
+              </h3>
+              <p id="res-likely-cause" style="font-size: var(--font-size-base); color: var(--color-text); line-height: 1.7;">
+                Loading likely cause...
+              </p>
+            </div>
+          </section>
+
+          <!-- 3. FIRST AID NOW (PEACE & LOVE) -->
+          <section class="section-card" id="sec-firstaid" aria-labelledby="title-firstaid">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">🧊</span>
+                <h2 id="title-firstaid" class="card-title">3. First Aid Now (PEACE &amp; LOVE)</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: 1rem;">
+                Follow these modern evidence-based sports first-aid guidelines immediately following the injury:
+              </p>
+              <ul class="first-aid-steps-list" id="res-first-aid-list">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+          </section>
+
+          <!-- 4. RECOVERY EXERCISES (Phase Tabs) -->
+          <section class="section-card" id="sec-exercises" aria-labelledby="title-exercises">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">🏋️‍♂️</span>
+                <h2 id="title-exercises" class="card-title">4. Recovery Exercises</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: 1rem;">
+                Progress through these 3 rehabilitation phases. The phase matching your injury timing has been highlighted automatically:
+              </p>
+
+              <!-- Exercise Phase Tabs Navigation -->
+              <div class="exercise-tabs-nav" id="exercise-tabs-nav" role="tablist">
+                <button type="button" class="exercise-tab-btn" id="tab-btn-day13" role="tab" aria-selected="true" data-phase="Day 1-3">
+                  <span>Day 1–3</span>
+                  <span class="tab-auto-badge" id="badge-day13" style="display: none;">Your Phase</span>
+                </button>
+                <button type="button" class="exercise-tab-btn" id="tab-btn-week1" role="tab" aria-selected="false" data-phase="Week 1">
+                  <span>Week 1</span>
+                  <span class="tab-auto-badge" id="badge-week1" style="display: none;">Your Phase</span>
+                </button>
+                <button type="button" class="exercise-tab-btn" id="tab-btn-week2" role="tab" aria-selected="false" data-phase="Week 2 and beyond">
+                  <span>Week 2 &amp; Beyond</span>
+                  <span class="tab-auto-badge" id="badge-week2" style="display: none;">Your Phase</span>
+                </button>
+              </div>
+
+              <!-- Exercise Panes Container -->
+              <div id="exercise-panes-container">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. TAPING GUIDE -->
+          <section class="section-card" id="sec-taping" aria-labelledby="title-taping">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">🩹</span>
+                <h2 id="title-taping" class="card-title">5. Taping Guide</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <ol class="first-aid-steps-list" id="res-taping-steps">
+                <!-- Populated dynamically -->
+              </ol>
+              <div class="personalization-callout repeat" style="margin-top: 1rem;">
+                <span aria-hidden="true">💡</span>
+                <span id="res-taping-note">Learn the technique from a physio or a trusted video before trying it.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 6. MEDICINE INFORMATION -->
+          <section class="section-card" id="sec-medicine" aria-labelledby="title-medicine">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">💊</span>
+                <h2 id="title-medicine" class="card-title">6. Medicine Information</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <div class="quote-box" style="border-left-color: var(--color-primary); background: #f0fdf4; margin: 0 0 1rem 0;">
+                <p id="res-medicine-text" style="font-size: var(--font-size-sm); color: var(--color-text); line-height: 1.7; font-style: normal;">
+                  Loading medicine guidance...
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7. REST TIME AND RETURN TO PLAY -->
+          <section class="section-card" id="sec-returntoplay" aria-labelledby="title-returntoplay">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">🏁</span>
+                <h2 id="title-returntoplay" class="card-title">7. Rest Time &amp; Return to Play</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <div class="rest-durations-row" id="res-rest-tiers">
+                <!-- Populated dynamically -->
+              </div>
+
+              <!-- Interactive Return to Play Checklist Tracker -->
+              <div class="rtp-tracker-box">
+                <div class="rtp-tracker-header">
+                  <span>Return-to-Play Readiness Tracker</span>
+                  <span id="rtp-counter-text">0 of 0 Completed</span>
+                </div>
+                <div class="rtp-progress-track">
+                  <div class="rtp-progress-fill" id="rtp-progress-fill"></div>
+                </div>
+                <div class="rtp-status-note" id="rtp-status-note">
+                  Ready to return only when ALL items are ticked.
+                </div>
+              </div>
+
+              <ul class="interactive-checklist" id="res-rtp-checklist">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+          </section>
+
+          <!-- 8. TIPS FOR YOUR SPORT -->
+          <section class="section-card" id="sec-sporttips" aria-labelledby="title-sporttips" style="display: none;">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">🏆</span>
+                <h2 id="title-sporttips" class="card-title">8. Tips for Your Sport</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <div class="quote-box" style="background:#ffffff; border-left-color: var(--color-accent); margin-bottom: 1rem;">
+                <div style="font-weight: 800; font-size: var(--font-size-xs); text-transform: uppercase; color: var(--color-accent); margin-bottom: 4px;">
+                  Prevention &amp; Recovery Strategy
+                </div>
+                <p id="res-sport-tip" style="font-size: var(--font-size-sm); color: var(--color-text); line-height: 1.6; font-style: normal;">
+                  Loading sport tip...
+                </p>
+              </div>
+
+              <div class="quote-box" style="background:#ffffff; border-left-color: var(--color-primary); margin-bottom: 1rem;">
+                <div style="font-weight: 800; font-size: var(--font-size-xs); text-transform: uppercase; color: var(--color-primary); margin-bottom: 4px;">
+                  Pre-Return Readiness Check
+                </div>
+                <p id="res-sport-return" style="font-size: var(--font-size-sm); color: var(--color-text); line-height: 1.6; font-style: normal;">
+                  Loading return check...
+                </p>
+              </div>
+
+              <div style="margin-top: 1rem;">
+                <h3 style="font-size: var(--font-size-xs); font-weight: 800; text-transform: uppercase; color: var(--color-text-light); letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+                  Prevalent Injuries in this Sport
+                </h3>
+                <ul id="res-sport-injuries" style="list-style: none; display: flex; flex-direction: column; gap: 0.4rem;">
+                  <!-- Populated dynamically -->
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 9. MISTAKES TO AVOID -->
+          <section class="section-card" id="sec-mistakes" aria-labelledby="title-mistakes">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">⚠️</span>
+                <h2 id="title-mistakes" class="card-title">9. Mistakes to Avoid</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <ul class="first-aid-steps-list" id="res-mistakes-list">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+          </section>
+
+          <!-- 10. SEE A DOCTOR IF -->
+          <section class="section-card" id="sec-warnings" aria-labelledby="title-warnings">
+            <header class="card-accordion-header" tabindex="0" role="button" aria-expanded="true">
+              <div class="card-title-group">
+                <span class="card-icon" aria-hidden="true">🚨</span>
+                <h2 id="title-warnings" class="card-title">10. See a Doctor If</h2>
+              </div>
+              <span class="accordion-caret" aria-hidden="true">▼</span>
+            </header>
+            <div class="card-accordion-body">
+              <p style="font-size: var(--font-size-sm); color: var(--color-danger); font-weight: 700; margin-bottom: 0.75rem;">
+                Seek immediate in-person medical evaluation if you experience any of the following warning signs:
+              </p>
+              <ul class="first-aid-steps-list" id="res-warnings-list">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <!-- BOTTOM ACTION BUTTONS -->
+        <div class="results-action-bar">
+          <button type="button" class="btn btn-secondary" id="btn-print-action">
+            <span aria-hidden="true">🖨️</span>
+            <span>Save as PDF / Print</span>
+          </button>
+          <a href="ask-physio.html" class="btn btn-primary" id="btn-ask-physio-action">
+            <span aria-hidden="true">💬</span>
+            <span>Ask the Physio</span>
+          </a>
+          <button type="button" class="btn btn-outline" id="btn-start-over-action">
+            <span aria-hidden="true">↺</span>
+            <span>Start Over</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo" aria-label="PlaySafe Hub logo">
+            <img src="assets/logo.svg" alt="PlaySafe Hub logo" height="40" class="navbar-logo-img">
+          </a>
+          <p class="footer-tagline">
+            Bringing accessible, first-level sports injury guidance and rehabilitation roadmaps to athletes across India and beyond.
+          </p>
+        </div>
+        <div>
+          <h4 class="footer-links-title">Quick Links</h4>
+          <nav class="footer-links" aria-label="Footer Navigation">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="injury-finder.html" class="footer-link">Injury Finder</a>
+            <a href="ask-physio.html" class="footer-link">Ask the Physio</a>
+            <a href="how-i-used-ai.html" class="footer-link">How I Used AI</a>
+            <a href="safety.html" class="footer-link">Safety &amp; Disclaimer</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Mandatory Footer Disclaimer -->
+      <div class="footer-disclaimer-box">
+        <p class="footer-disclaimer-text">
+          <span aria-hidden="true">⚠️</span>
+          <span><strong>General guidance only, not a doctor's diagnosis.</strong> PlaySafe is an educational triage tool. AI and automated guidance can make errors. Always seek evaluation by a qualified medical professional for acute injuries.</span>
+        </p>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 PlaySafe Recovery Hub. All rights reserved.</p>
+        <p>Accessible sports healthcare for every player.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/bodyParts.js"></script>
+  <script src="js/sportTips.js"></script>
+  <script src="js/injuries.js"></script>
+  <script src="js/results.js"></script>
+</body>
+</html>
